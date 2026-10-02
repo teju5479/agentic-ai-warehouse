@@ -1,0 +1,80 @@
+[
+  {
+    "scenario_id": "EXC-001",
+    "name": "Inventory Shortfall",
+    "description": "Order ORD-1004 requires 10 units of SKU-005 but only 6 are available",
+    "type": "inventory_shortfall",
+    "expected_behavior": "Order becomes BLOCKED, planner must not assign it",
+    "affected_order": "ORD-1004",
+    "affected_sku": "SKU-005"
+  },
+  {
+    "scenario_id": "EXC-002",
+    "name": "Duplicate Order",
+    "description": "ORD-1005 and ORD-1006 are nearly identical orders for the same destination with same items",
+    "type": "duplicate_order",
+    "expected_behavior": "Investigate duplicate evidence. Require explicit approval to cancel/merge. Do not auto-delete.",
+    "affected_order": "ORD-1005"
+  },
+  {
+    "scenario_id": "EXC-003",
+    "name": "Shipment/Order Status Conflict",
+    "description": "ORD-1007 is PROCESSING but its shipment SHP-107 shows DELIVERED",
+    "type": "status_conflict",
+    "expected_behavior": "Investigate contradictory records. Do not blindly update. Escalate.",
+    "affected_order": "ORD-1007"
+  },
+  {
+    "scenario_id": "EXC-004",
+    "name": "Invalid Quantity",
+    "description": "ORD-1008 has an order line with requested_qty = -2",
+    "type": "invalid_quantity",
+    "expected_behavior": "Reject malformed data. Do not perform operational action. Record validation failure.",
+    "affected_order": "ORD-1008"
+  },
+  {
+    "scenario_id": "EXC-005",
+    "name": "Stale Shipment",
+    "description": "ORD-1009 shipment SHP-109 has been IN_TRANSIT for 14 days with no updates",
+    "type": "stale_shipment",
+    "expected_behavior": "Identify stale condition. Retrieve applicable policy. Escalate or take permitted action.",
+    "affected_order": "ORD-1009"
+  },
+  {
+    "scenario_id": "EXC-006",
+    "name": "Conflicting Destination",
+    "description": "ORD-1010 destination is DEST-CHICAGO but shipment SHP-110 destination is DEST-DALLAS",
+    "type": "conflicting_destination",
+    "expected_behavior": "Do not guess correct destination. Preserve state. Escalate.",
+    "affected_order": "ORD-1010"
+  },
+  {
+    "scenario_id": "EXC-007",
+    "name": "Missing Inventory Location",
+    "description": "ORD-1011 requires SKU-011 which has no inventory location record",
+    "type": "missing_inventory",
+    "expected_behavior": "Cannot determine inventory availability. Escalate - ambiguous situation requiring human investigation.",
+    "affected_order": "ORD-1011"
+  },
+  {
+    "scenario_id": "PLAN-001",
+    "name": "Multi-Order Planning",
+    "description": "Generate shift plan for all pending orders with available pickers",
+    "type": "planning",
+    "expected_behavior": "Assign feasible orders to available pickers respecting capacity and inventory. Block infeasible orders."
+  },
+  {
+    "scenario_id": "PLAN-002",
+    "name": "Replanning - Picker Unavailable",
+    "description": "PICK-001 becomes unavailable after initial plan",
+    "type": "replanning",
+    "expected_behavior": "Preserve completed work. Reassign affected pending orders. Generate plan v2."
+  },
+  {
+    "scenario_id": "PLAN-003",
+    "name": "Replanning - Urgent Order",
+    "description": "New urgent order ORD-1020 arrives with near-term deadline",
+    "type": "replanning",
+    "expected_behavior": "Insert urgent order into plan with high priority. Adjust assignments as needed."
+  }
+]

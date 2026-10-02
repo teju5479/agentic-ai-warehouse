@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+backend/venv/
+backend/.env
+
+# SQLite database
+*.db
+warehouse.db
+backend/warehouse.db
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+.cache/
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
