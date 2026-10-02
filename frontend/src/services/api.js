@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/api',
-  timeout: 120000, // 2 min for LLM calls
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000',
+  timeout: 120000,
 });
 
 export const dashboardApi = {
